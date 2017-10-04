@@ -1,8 +1,5 @@
-/**
- * MetaObject
- * implemente a method missing member function, will be called if some funciton doesn't exist.
- */
-var MetaObject = function() {
+/* Mixin Pattern to achieve Meta programming */
+var MetaMixin = function() {
   this.send = function(method) {
     var args = Array.prototype.slice.call(arguments, 1);
     if (!this[method]) {
@@ -17,13 +14,16 @@ var MetaObject = function() {
   }
 }
 
-/* Normal Object Constructor */
-var TestObj = function() {
-  this.name = 'TestObj'
-}
+var TestObj = function(name) {
 
-TestObj.prototype = new MetaObject();
+  /* Import Mixin */
+  MetaMixin.call(this);
+
+  this.name = name;
+}
 
 var a = new TestObj();
 
 a.send('greeting', 'hi'); /* logout arguments */
+
+
